@@ -1,0 +1,7 @@
+{
+  "name": "e1_estefania_neira_s2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
