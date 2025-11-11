@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card class="logo-card" @fadeIn>
+    <ion-card-content>
+      <div class="logo-container">
+        <img src="assets/petcare.png" alt="PetCare+" class="main-logo">
+        <ion-card-subtitle>Gestiona tu información y la de tu mascota</ion-card-subtitle>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card @fadeIn>
+    <ion-card-header>
+      <ion-card-title>Ingresa a PetCare+</ion-card-title>
+
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput placeholder="test@petcare.com" formControlName="email" type="email" />
+          <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+            El correo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="loginForm.controls.email.hasError('email')">
+            Ingresa un formato válido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Mínimo 6 caracteres (1-6)"
+          />
+          <button type="button" matSuffix (click)="togglePassword()" tabindex="-1" class="password-toggle-btn">
+            <ion-icon [name]="hidePassword ? 'eye-off' : 'eye'" size="small"></ion-icon>
+          </button>
+          <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+            La contraseña es obligatoria.
+          </mat-error>
+          <mat-error *ngIf="loginForm.controls.password.hasError('minlength')">
+            Debe tener al menos 6 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <ion-button expand="block" type="submit" color="primary">Ingresar</ion-button>
+      </form>
+      <ion-text color="medium">
+        ¿Aún no tienes cuenta?
+        <a routerLink="/register">Crea una ahora</a>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

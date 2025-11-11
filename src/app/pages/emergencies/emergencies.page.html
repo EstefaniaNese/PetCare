@@ -1,0 +1,96 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Emergencias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card class="sos-card" @fadeIn>
+    <ion-card-header>
+      <ion-card-title>Botón SOS</ion-card-title>
+      <ion-card-subtitle>Información vital de tu mascota y contacto directo</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" color="danger" size="large" (click)="showSOS()">
+        <ion-icon slot="start" name="alert"></ion-icon>
+        SOS Veterinario
+      </ion-button>
+      <ion-text color="medium">
+        Se mostrará la información registrada en el perfil y podrás llamar al veterinario.
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card @fadeIn>
+    <ion-card-header>
+      <ion-card-title>Contactos útiles</ion-card-title>
+      <ion-card-subtitle>Comparte esta lista con tu familia</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button expand="block" color="secondary" (click)="callEmergency('106')">
+              <ion-icon slot="start" name="medkit"></ion-icon>
+              Ambulancia veterinaria (106)
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button expand="block" color="tertiary" (click)="callEmergency('116')">
+              <ion-icon slot="start" name="call"></ion-icon>
+              Bomberos (116)
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card @fadeIn>
+    <ion-card-header>
+      <ion-card-title>Primeros auxilios</ion-card-title>
+    </ion-card-header>
+    <ion-list>
+      <ion-item *ngFor="let action of quickActions">
+        <ion-icon slot="start" [name]="action.icon"></ion-icon>
+        <ion-label>
+          <h2>{{ action.title }}</h2>
+          <p>{{ action.description }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card @fadeIn *ngIf="pet$ | async as pet">
+    <ion-card-header>
+      <ion-card-title>Datos médicos registrados</ion-card-title>
+      <ion-card-subtitle>Tenlos a la mano en emergencias</ion-card-subtitle>
+    </ion-card-header>
+    <ion-list>
+      <ion-item>
+        <ion-icon slot="start" name="paw"></ion-icon>
+        <ion-label>
+          <h2>{{ pet.name }}</h2>
+          <p>{{ pet.species }} • {{ pet.weight }} kg</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="medkit"></ion-icon>
+        <ion-label>
+          <h2>Veterinario</h2>
+          <p>{{ pet.vetName }} • {{ pet.vetPhone }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="pet.notes">
+        <ion-icon slot="start" name="document-text"></ion-icon>
+        <ion-label>
+          <h2>Indicaciones</h2>
+          <p>{{ pet.notes }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

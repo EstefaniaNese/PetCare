@@ -1,0 +1,185 @@
+// Fondo claro para toda la página
+ion-content {
+  --background: #f9f5ea;
+}
+
+// Lista de recordatorios
+ion-list {
+  background: transparent;
+  padding: 16px;
+}
+
+ion-item {
+  border-radius: 12px;
+  margin-bottom: 12px;
+  --background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  ion-label {
+    h2 {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    
+    p {
+      color: #6c757d;
+    }
+  }
+  
+  ion-badge {
+    font-weight: 500;
+  }
+  
+  ion-icon {
+    color: #c97a38;
+  }
+  
+  ion-button {
+    --color: #dc3545;
+  }
+}
+
+// Botón flotante
+ion-fab-button {
+  --background: #c97a38;
+  --background-activated: #b06831;
+  --color: #ffffff;
+  box-shadow: 0 4px 12px rgba(201, 122, 56, 0.3);
+  width: 56px;
+  height: 56px;
+  
+  ion-icon {
+    color: #ffffff !important;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Modal de nuevo recordatorio
+ion-modal {
+  ion-header {
+    ion-toolbar {
+      --background: #c97a38;
+      --color: #ffffff;
+      
+      ion-title {
+        color: #ffffff;
+        font-weight: 600;
+      }
+      
+      ion-button {
+        --color: #ffffff;
+      }
+    }
+  }
+  
+  ion-content {
+    --background: #f9f5ea;
+  }
+}
+
+// Formulario dentro del modal
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+
+  mat-form-field {
+    width: 100%;
+    
+    // Estilos para inputs con color naranja oscuro
+    .mat-mdc-form-field-focus-overlay {
+      background-color: #c97a38;
+    }
+    
+    .mat-mdc-text-field-wrapper {
+      background-color: #fff;
+      border-radius: 8px;
+    }
+    
+    .mat-mdc-form-field-outline {
+      color: #c97a38;
+    }
+    
+    .mat-mdc-form-field-outline-thick {
+      color: #c97a38;
+    }
+    
+    &.mat-focused {
+      .mat-mdc-form-field-outline-thick {
+        color: #c97a38;
+      }
+    }
+    
+    .mat-mdc-floating-label {
+      color: #c97a38;
+    }
+    
+    &.mat-focused .mat-mdc-floating-label {
+      color: #c97a38;
+    }
+    
+    .mat-mdc-input-element {
+      color: #2c3e50;
+      
+      &::placeholder {
+        color: #6c757d;
+      }
+    }
+    
+    .mat-mdc-select-value {
+      color: #2c3e50;
+    }
+    
+    .mat-mdc-select-arrow {
+      color: #c97a38;
+    }
+    
+    // Estilos para el datepicker
+    .mat-datepicker-toggle {
+      color: #c97a38;
+    }
+  }
+}
+
+// Botón de guardar recordatorio
+ion-button[type="submit"] {
+  --background: #c97a38;
+  --background-activated: #b06831;
+  --background-hover: #d48842;
+  --color: #ffffff;
+  margin-top: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  
+  &[disabled] {
+    --background: #cccccc;
+    --color: #666666;
+  }
+}
+
+// Textarea personalizada
+textarea {
+  resize: vertical;
+  background-color: #fff;
+  color: #2c3e50;
+  border: 2px solid #c97a38;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: inherit;
+  
+  &:focus {
+    outline: none;
+    border-color: #c97a38;
+    box-shadow: 0 0 0 3px rgba(201, 122, 56, 0.1);
+  }
+  
+  &::placeholder {
+    color: #6c757d;
+  }
+}
+

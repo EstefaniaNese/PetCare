@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Comunidad y servicios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-segment [value]="filter()" (ionChange)="setFilter($event.detail.value)">
+    <ion-segment-button value="Todos">
+      <ion-label>Todos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Veterinario">
+      <ion-label>Veterinarios</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Peluquería">
+      <ion-label>Peluquerías</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Tienda">
+      <ion-label>Tiendas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-searchbar
+    placeholder="Buscar por nombre o dirección"
+    (ionInput)="updateSearch($event)"
+    class="ion-margin-top"
+  ></ion-searchbar>
+
+  <ion-list>
+    <ion-card *ngFor="let service of filteredServices(); trackBy: trackByService" [@fadeIn]>
+      <ion-card-header>
+        <ion-card-subtitle>{{ service.type }}</ion-card-subtitle>
+        <ion-card-title>{{ service.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="address">
+          <ion-icon name="location-outline"></ion-icon>
+          {{ service.address }}
+        </p>
+        <p>{{ service.description }}</p>
+        <div class="actions">
+          <ion-button fill="outline" size="small" (click)="openMaps(service.mapUrl)">
+            <ion-icon slot="start" name="map"></ion-icon>
+            Ver mapa
+          </ion-button>
+          <ion-button size="small" color="secondary" (click)="call(service.phone)">
+            <ion-icon slot="start" name="call"></ion-icon>
+            Llamar
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

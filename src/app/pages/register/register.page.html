@@ -1,0 +1,121 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <!-- Menú lateral oculto en vistas de autenticación -->
+    <ion-title>
+      <div class="logo-title-container">
+        <img src="assets/images/logo.png" alt="PetCare+" class="header-logo" *ngIf="showLogo">
+        <span *ngIf="!showLogo">PetCare+</span>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="navigateToLogin()">
+        <ion-icon name="log-in-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Crear cuenta</ion-card-title>
+      <ion-card-subtitle>Centraliza el cuidado de tus mascotas</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre completo</mat-label>
+          <input matInput placeholder="Nombre y apellido" formControlName="fullName" />
+          <mat-error *ngIf="registerForm.controls.fullName.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls.fullName.hasError('minlength')">
+            Debe tener al menos 3 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="ejemplo@email.com" />
+          <mat-error *ngIf="registerForm.controls.email.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls.email.hasError('email')">
+            Ingresa un correo válido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono de contacto</mat-label>
+          <input matInput type="tel" formControlName="phone" placeholder="+569 1234 5678" />
+          <mat-error *ngIf="registerForm.controls.phone.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls.phone.hasError('pattern')">
+            Solo se permiten números, espacios y el signo +.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Mínimo 6 caracteres"
+          />
+          <button type="button" matSuffix (click)="togglePassword('password')" tabindex="-1" class="password-toggle-btn">
+            <ion-icon [name]="hidePassword ? 'eye-off' : 'eye'" size="small"></ion-icon>
+          </button>
+          <mat-error *ngIf="registerForm.controls.password.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">
+            Debe tener al menos 6 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input
+            matInput
+            [type]="hideConfirm ? 'password' : 'text'"
+            formControlName="confirmPassword"
+            placeholder="Repite tu contraseña"
+          />
+          <button type="button" matSuffix (click)="togglePassword('confirm')" tabindex="-1" class="password-toggle-btn">
+            <ion-icon [name]="hideConfirm ? 'eye-off' : 'eye'" size="small"></ion-icon>
+          </button>
+          <mat-error *ngIf="registerForm.hasError('mismatch')">
+            Las contraseñas no coinciden.
+          </mat-error>
+        </mat-form-field>
+
+        <ion-button expand="block" type="submit" color="secondary">Crear cuenta</ion-button>
+      </form>
+      <ion-text color="medium">
+        ¿Ya tienes cuenta?
+        <a routerLink="/login">Inicia sesión</a>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+
+  <!-- Sección de características -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Características Principales</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item *ngFor="let feature of features">
+          <ion-icon [name]="feature.icon" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <h3>{{ feature.title }}</h3>
+            <p>{{ feature.description }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

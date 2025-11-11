@@ -1,0 +1,51 @@
+// Fondo claro para toda la página
+ion-content {
+  --background: #f9f5ea;
+}
+
+ion-card {
+  margin-bottom: 24px;
+  --background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.sos-card ion-button {
+  margin-bottom: 12px;
+}
+
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --background: #ffffff;
+  margin-bottom: 8px;
+  border-radius: 12px;
+}
+
+// Botones con nuevo color
+ion-button[color="primary"] {
+  --background: #c97a38;
+  --background-activated: #b06831;
+  --background-hover: #ce874c;
+  --color: #ffffff;
+}
+
+ion-button[color="danger"] {
+  --background: #dc3545;
+  --background-activated: #c82333;
+  --background-hover: #e14c5a;
+  --color: #ffffff;
+}
+
+// Títulos con color oscuro
+ion-card-title {
+  color: #12384b;
+}
+
+// Subtítulos grises
+ion-card-subtitle {
+  color: #6c757d;
+}
+

@@ -1,0 +1,110 @@
+// Fondo claro para toda la página
+ion-content {
+  --background: #f9f5ea;
+}
+
+ion-card {
+  margin-top: 24px;
+  --background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+ion-card-header {
+  --color: #2c3e50;
+}
+
+ion-card-title {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+ion-card-subtitle {
+  color: #6c757d;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px;
+
+  mat-form-field {
+    width: 100%;
+    
+    // Estilos para inputs con color naranja oscuro
+    .mat-mdc-form-field-focus-overlay {
+      background-color: #c97a38;
+    }
+    
+    .mat-mdc-text-field-wrapper {
+      background-color: #fff;
+      border-radius: 8px;
+    }
+    
+    .mat-mdc-form-field-outline {
+      color: #c97a38;
+    }
+    
+    .mat-mdc-form-field-outline-thick {
+      color: #c97a38;
+    }
+    
+    &.mat-focused {
+      .mat-mdc-form-field-outline-thick {
+        color: #c97a38;
+      }
+    }
+    
+    .mat-mdc-floating-label {
+      color: #c97a38;
+    }
+    
+    &.mat-focused .mat-mdc-floating-label {
+      color: #c97a38;
+    }
+    
+    .mat-mdc-input-element {
+      color: #2c3e50;
+      
+      &::placeholder {
+        color: #6c757d;
+      }
+    }
+    
+    .mat-mdc-select-value {
+      color: #2c3e50;
+    }
+    
+    .mat-mdc-select-arrow {
+      color: #c97a38;
+    }
+  }
+}
+
+// Botón de guardar con estilo naranja
+ion-button[color="primary"] {
+  --background: #c97a38;
+  --background-activated: #b06831;
+  --background-hover: #d48842;
+  --color: #ffffff;
+  margin-top: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+textarea {
+  resize: vertical;
+  background-color: #fff;
+  color: #2c3e50;
+  border: 2px solid #c97a38;
+  border-radius: 8px;
+  padding: 12px;
+  
+  &:focus {
+    outline: none;
+    border-color: #c97a38;
+    box-shadow: 0 0 0 3px rgba(201, 122, 56, 0.1);
+  }
+}
+

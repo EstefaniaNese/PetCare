@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil de mascota</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card @fadeIn>
+    <ion-card-header>
+      <ion-card-title>Datos principales</ion-card-title>
+      <ion-card-subtitle>Completa la ficha para personalizar recordatorios</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="petForm" (ngSubmit)="save()" class="form-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" placeholder="Firulais" />
+          <mat-error *ngIf="petForm.controls.name.invalid">El nombre es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Especie</mat-label>
+          <mat-select formControlName="species">
+            <mat-option *ngFor="let option of speciesOptions" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="petForm.controls.species.invalid">Selecciona una especie.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Raza</mat-label>
+          <input matInput formControlName="breed" placeholder="Opcional" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Selecciona una fecha" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="petForm.controls.birthDate.invalid">Selecciona la fecha.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Peso (kg)</mat-label>
+          <input matInput type="number" step="0.1" min="0" formControlName="weight" placeholder="Ej. 7.5" />
+          <mat-error *ngIf="petForm.controls.weight.invalid">Ingresa un valor válido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Veterinario de cabecera</mat-label>
+          <input matInput formControlName="vetName" placeholder="Dra. María Pérez" />
+          <mat-error *ngIf="petForm.controls.vetName.invalid">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono del veterinario</mat-label>
+          <input matInput formControlName="vetPhone" placeholder="+569 5231 9241" />
+          <mat-error *ngIf="petForm.controls.vetPhone.invalid">Ingresa un teléfono válido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>URL de foto (opcional)</mat-label>
+          <input matInput formControlName="avatarUrl" placeholder="https://..." />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Notas adicionales</mat-label>
+          <textarea matInput formControlName="notes" rows="3"></textarea>
+        </mat-form-field>
+
+        <ion-button expand="block" type="submit" color="primary">Guardar cambios</ion-button>
+      </form>
+      <ion-text color="medium">
+        La información se almacena localmente en tu dispositivo.
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,3 +1,37 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu *ngIf="!isAuthRoute" [contentId]="'main-content'" side="start" type="overlay" [class.opened]="isMenuOpen" [class.closed]="!isMenuOpen" (ionDidClose)="isMenuOpen = false">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>PetCare+</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list lines="none">
+        <ion-item
+          button
+          detail="false"
+          *ngFor="let page of appPages"
+          (click)="navigate(page.url); closeMenu()"
+        >
+          <ion-icon slot="start" [name]="page.icon"></ion-icon>
+          <ion-label>{{ page.title }}</ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-button
+        expand="block"
+        color="medium"
+        class="logout-button"
+        (click)="logout(); closeMenu()"
+        *ngIf="isLoggedIn$ | async"
+      >
+        Cerrar sesión
+      </ion-button>
+    </ion-content>
+  </ion-menu>
+
+  <button class="desktop-menu-toggle" (click)="openMenu()">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

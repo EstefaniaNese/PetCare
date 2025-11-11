@@ -1,27 +1,106 @@
-#container {
+// Fondo claro para toda la página
+ion-content {
+  --background: #f9f5ea;
+}
+
+.welcome-card,
+.animation-card,
+.pet-card,
+.quick-actions,
+.reminders-card {
+  margin-bottom: 24px;
+  --background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.animation-card {
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.pet-details {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+
+  ion-avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+.quick-actions ion-button {
+  height: 56px;
 }
 
-#container a {
-  text-decoration: none;
+// Botones con nuevo color
+ion-button[color="primary"] {
+  --background: #c97a38;
+  --background-activated: #b06831;
+  --background-hover: #ce874c;
+  --color: #ffffff;
+  
+  ion-icon {
+    color: #ffffff !important;
+    font-size: 1.2em;
+  }
+}
+
+ion-button[color="danger"] {
+  --background: #dc3545;
+  --background-activated: #c82333;
+  --background-hover: #e14c5a;
+  --color: #ffffff;
+  
+  ion-icon {
+    color: #ffffff !important;
+    font-size: 1.2em;
+  }
+}
+
+ion-button[color="success"] {
+  --background: #28a745;
+  --background-activated: #1e7e34;
+  --background-hover: #34ce57;
+  --color: #ffffff;
+  
+  ion-icon {
+    color: #ffffff !important;
+    font-size: 1.2em;
+  }
+}
+
+// Títulos con color oscuro
+ion-card-title {
+  color: #12384b;
+}
+
+// Subtítulos grises
+ion-card-subtitle {
+  color: #6c757d;
+}
+
+.reminders-card ion-item {
+  border-radius: 12px;
+  margin-bottom: 8px;
+  background: #fff !important;
+  --background: #fff !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.reminders-card ion-list {
+  background: #fff !important;
+  --background: #fff !important;
 }

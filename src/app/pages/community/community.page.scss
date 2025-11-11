@@ -1,0 +1,65 @@
+// Fondo claro para toda la página
+ion-content {
+  --background: #f9f5ea;
+}
+
+ion-card {
+  margin-bottom: 16px;
+  --background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+// Botones con nuevo color
+ion-button[color="primary"] {
+  --background: #c97a38;
+  --background-activated: #b06831;
+  --background-hover: #ce874c;
+  --color: #ffffff;
+}
+
+ion-button[color="success"] {
+  --background: #28a745;
+  --background-activated: #1e7e34;
+  --background-hover: #34ce57;
+  --color: #ffffff;
+}
+
+// Títulos con color oscuro
+ion-card-title {
+  color: #12384b;
+}
+
+// Subtítulos grises
+ion-card-subtitle {
+  color: #6c757d;
+}
+
+// Segmento con nuevo color
+ion-segment {
+  --background: #ffffff;
+}
+
+ion-segment-button {
+  --color: #c97a38;
+  --color-checked: #ffffff;
+  --background-checked: #c97a38;
+}
+
