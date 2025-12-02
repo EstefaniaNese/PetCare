@@ -91,6 +91,78 @@ ion-card-subtitle {
   color: #6c757d;
 }
 
+.connectivity-chip {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.welcome-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  
+  div:first-child {
+    flex: 1;
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 0.5rem;
+    
+    ion-button {
+      margin: 0;
+      --padding-start: 8px;
+      --padding-end: 8px;
+    }
+  }
+}
+
+.sync-status-card {
+  margin-top: 1rem;
+  --background: #f8f9fa;
+  border: 1px solid var(--ion-color-light);
+  
+  .sync-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    ion-icon {
+      font-size: 1.5rem;
+    }
+    
+    div {
+      flex: 1;
+      
+      .sync-text {
+        margin: 0 0 0.25rem 0;
+        font-size: 0.9rem;
+        color: var(--ion-color-dark);
+      }
+      
+      .sync-status {
+        margin: 0;
+        font-size: 0.8rem;
+        color: var(--ion-color-success);
+        font-weight: 500;
+        
+        &.offline {
+          color: var(--ion-color-warning);
+        }
+      }
+    }
+    
+    ion-button {
+      margin: 0;
+      --padding-start: 8px;
+      --padding-end: 8px;
+    }
+  }
+}
+
 .reminders-card ion-item {
   border-radius: 12px;
   margin-bottom: 8px;

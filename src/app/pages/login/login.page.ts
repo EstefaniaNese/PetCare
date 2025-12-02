@@ -23,6 +23,7 @@ import { AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-login',
@@ -71,23 +72,31 @@ export class LoginPage {
     private readonly authService: AuthService,
     private readonly navCtrl: NavController,
     private readonly alertCtrl: AlertController,
+    private readonly uiService: UiService,
   ) {}
 
   async onSubmit(): Promise<void> {
     if (this.loginForm.invalid) {
-      await this.presentAlert('Formulario incompleto', 'Por favor completa todos los campos requeridos.');
+      await this.uiService.showErrorToast('Por favor completa todos los campos requeridos.');
       return;
     }
 
-    const result = this.authService.login(this.loginForm.getRawValue());
+    const result = await this.uiService.handleOperation(
+      () => this.authService.login(this.loginForm.getRawValue()),
+      {
+        loadingMessage: 'Iniciando sesión...',
+        successMessage: '¡Bienvenido! Disfruta de PetCare+',
+        errorMessage: 'Error al iniciar sesión',
+        showSuccessToast: true,
+        showErrorAlert: false
+      }
+    );
 
-    if (!result.success) {
-      await this.presentAlert('Ups...', result.message);
-      return;
+    if (result?.success) {
+      this.navCtrl.navigateForward('/home', { animated: true, animationDirection: 'forward' });
+    } else if (result && !result.success) {
+      await this.uiService.showErrorToast(result.message);
     }
-
-    await this.presentAlert('¡Bienvenido!', 'Inicio de sesión correcto. Disfruta de PetCare+');
-    this.navCtrl.navigateForward('/home', { animated: true, animationDirection: 'forward' });
   }
 
   togglePassword(): void {

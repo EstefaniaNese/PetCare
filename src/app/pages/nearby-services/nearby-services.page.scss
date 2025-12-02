@@ -1,0 +1,129 @@
+ion-content {
+  --background: #f9f5ea;
+}
+
+ion-segment {
+  margin-bottom: 1rem;
+  --background: #ffffff;
+  border-radius: 12px;
+  padding: 0.25rem;
+}
+
+.service-card {
+  margin-bottom: 1rem;
+  --background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.service-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+
+  &.type-veterinaria {
+    background: var(--ion-color-primary-tint);
+    color: var(--ion-color-primary);
+  }
+
+  &.type-medico {
+    background: var(--ion-color-secondary-tint);
+    color: var(--ion-color-secondary);
+  }
+
+  &.type-peluqueria {
+    background: var(--ion-color-tertiary-tint);
+    color: var(--ion-color-tertiary);
+  }
+}
+
+.service-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-details {
+  margin: 1rem 0;
+}
+
+.service-address {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+
+  ion-icon {
+    color: var(--ion-color-primary);
+  }
+}
+
+.service-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.service-services {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ion-color-light);
+
+  .services-label {
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .services-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+.service-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ion-color-light);
+
+  ion-button {
+    flex: 1;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    color: var(--ion-color-dark);
+    margin-bottom: 0.5rem;
+  }
+}
+

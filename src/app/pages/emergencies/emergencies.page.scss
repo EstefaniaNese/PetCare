@@ -49,3 +49,157 @@ ion-card-subtitle {
   color: #6c757d;
 }
 
+// Estilos para geolocalización
+.location-section {
+  margin-bottom: 1rem;
+  text-align: center;
+  
+  ion-spinner {
+    margin-top: 1rem;
+  }
+  
+  .location-info {
+    margin-top: 1rem;
+    text-align: center;
+    
+    ion-chip {
+      margin: 0;
+      font-weight: 500;
+      
+      ion-icon {
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}
+
+.veterinaries-list {
+  margin-top: 1.5rem;
+  
+  h3 {
+    color: var(--ion-color-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .veterinary-item {
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--ion-color-light);
+    border-radius: 12px;
+    
+    .vet-type-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      
+      &.type-veterinaria {
+        background: var(--ion-color-primary-tint);
+        color: var(--ion-color-primary);
+      }
+      
+      &.type-clínica {
+        background: var(--ion-color-secondary-tint);
+        color: var(--ion-color-secondary);
+      }
+      
+      &.type-hospital {
+        background: var(--ion-color-tertiary-tint);
+        color: var(--ion-color-tertiary);
+      }
+      
+      &.type-emergencia {
+        background: var(--ion-color-danger-tint);
+        color: var(--ion-color-danger);
+      }
+      
+      ion-icon {
+        font-size: 1.2rem;
+      }
+    }
+    
+    ion-label {
+      h2 {
+        font-weight: 600;
+        color: var(--ion-color-dark);
+        margin-bottom: 0.25rem;
+      }
+      
+      p {
+        color: var(--ion-color-medium);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .vet-details {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        
+        ion-chip {
+          font-size: 0.75rem;
+          height: 24px;
+          
+          ion-icon {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+    
+    .vet-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      
+      ion-button {
+        width: 40px;
+        height: 40px;
+        
+        ion-icon {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+}
+
+// Estilos para cuando no hay veterinarias cercanas
+.no-vets-item {
+  --background: var(--ion-color-warning-tint);
+  --border-color: var(--ion-color-warning);
+  border-left: 4px solid var(--ion-color-warning);
+}
+
+.no-vets-message {
+  margin-top: 0.5rem;
+  
+  p {
+    margin: 0.5rem 0 0 0;
+    color: var(--ion-color-medium);
+  }
+}
+
+.no-vets-card {
+  margin-top: 1rem;
+  
+  h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--ion-color-warning-contrast);
+  }
+  
+  ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    
+    li {
+      margin-bottom: 0.3rem;
+      color: var(--ion-color-warning-contrast);
+    }
+  }
+}
+

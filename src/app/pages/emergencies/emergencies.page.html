@@ -26,8 +26,108 @@
 
   <ion-card @fadeIn>
     <ion-card-header>
-      <ion-card-title>Contactos útiles</ion-card-title>
-      <ion-card-subtitle>Comparte esta lista con tu familia</ion-card-subtitle>
+      <ion-card-title>Veterinarias Cercanas</ion-card-title>
+      <ion-card-subtitle>Encuentra ayuda veterinaria cerca de ti</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="location-section">
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          color="primary" 
+          (click)="findNearbyVeterinaries()"
+          [disabled]="isLoadingLocation">
+          <ion-icon slot="start" name="location"></ion-icon>
+          <span *ngIf="!isLoadingLocation">Buscar Veterinarias Cercanas</span>
+          <span *ngIf="isLoadingLocation">Buscando...</span>
+        </ion-button>
+        
+        <ion-spinner *ngIf="isLoadingLocation" name="crescent"></ion-spinner>
+        
+        <div *ngIf="currentLocation" class="location-info">
+          <ion-chip color="success">
+            <ion-icon name="location"></ion-icon>
+            <ion-label>
+              <span *ngIf="currentLocation.city; else defaultLocation">{{ currentLocation.city }}</span>
+              <ng-template #defaultLocation>Ubicación encontrada</ng-template>
+            </ion-label>
+          </ion-chip>
+        </div>
+      </div>
+      
+      <div *ngIf="nearbyVeterinaries.length > 0" class="veterinaries-list">
+        <h3 *ngIf="nearbyVeterinaries[0]?.id !== 'no-vets-found'">Veterinarias encontradas:</h3>
+        <h3 *ngIf="nearbyVeterinaries[0]?.id === 'no-vets-found'">⚠️ Sin veterinarias cercanas</h3>
+        
+        <ion-list>
+          <ion-item *ngFor="let vet of nearbyVeterinaries" class="veterinary-item" 
+                    [class.no-vets-item]="vet.id === 'no-vets-found'">
+            <div slot="start" class="vet-type-indicator" [class]="'type-' + vet.type.toLowerCase()">
+              <ion-icon [name]="getVeterinaryIcon(vet.type)"></ion-icon>
+            </div>
+            
+            <ion-label>
+              <h2>{{ vet.name }}</h2>
+              <p>{{ vet.address }}</p>
+              <div class="vet-details" *ngIf="vet.id !== 'no-vets-found'">
+                <ion-chip [color]="vet.isOpen ? 'success' : 'danger'" size="small">
+                  {{ vet.isOpen ? 'Abierto' : 'Cerrado' }}
+                </ion-chip>
+                <ion-chip color="medium" size="small" *ngIf="vet.distance">
+                  {{ formatDistance(vet.distance) }}
+                </ion-chip>
+                <ion-chip color="warning" size="small" *ngIf="vet.rating && vet.rating > 0">
+                  <ion-icon name="star"></ion-icon>
+                  {{ vet.rating }}
+                </ion-chip>
+              </div>
+              <div class="no-vets-message" *ngIf="vet.id === 'no-vets-found'">
+                <ion-chip color="warning" size="small">
+                  <ion-icon name="warning"></ion-icon>
+                  Radio de búsqueda: 50km
+                </ion-chip>
+                <p><small>Considera contactar servicios de emergencia o expandir tu búsqueda a ciudades cercanas.</small></p>
+              </div>
+            </ion-label>
+            
+            <div slot="end" class="vet-actions">
+              <ion-button 
+                fill="clear" 
+                [color]="vet.id === 'no-vets-found' ? 'danger' : 'primary'"
+                (click)="callVeterinary(vet.phone)">
+                <ion-icon name="call" slot="icon-only"></ion-icon>
+              </ion-button>
+              <ion-button 
+                *ngIf="vet.id !== 'no-vets-found'"
+                fill="clear" 
+                color="secondary" 
+                (click)="openInMaps(vet)">
+                <ion-icon name="navigate" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-item>
+        </ion-list>
+        
+        <!-- Mensaje adicional cuando no hay veterinarias -->
+        <ion-card *ngIf="nearbyVeterinaries[0]?.id === 'no-vets-found'" color="warning" class="no-vets-card">
+          <ion-card-content>
+            <h3>💡 Recomendaciones:</h3>
+            <ul>
+              <li>Contacta el <strong>133</strong> para emergencias</li>
+              <li>Busca veterinarias en ciudades cercanas</li>
+              <li>Consulta redes sociales locales</li>
+              <li>Pregunta a vecinos por recomendaciones</li>
+            </ul>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card @fadeIn>
+    <ion-card-header>
+      <ion-card-title>Contactos de emergencia</ion-card-title>
+      <ion-card-subtitle>Números importantes</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>

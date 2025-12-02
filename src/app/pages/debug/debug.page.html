@@ -1,0 +1,105 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Página de Debug</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card @fadeIn>
+    <ion-card-header>
+      <ion-card-title>🔍 Estado de la Aplicación</ion-card-title>
+      <ion-card-subtitle>Inspecciona y gestiona datos locales</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" color="primary" (click)="loadAllData()">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+        Recargar datos
+      </ion-button>
+      <ion-button expand="block" color="danger" (click)="clearAllData()">
+        <ion-icon slot="start" name="trash"></ion-icon>
+        Limpiar todos los datos
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="debugData" @fadeIn>
+    <ion-card-header>
+      <ion-card-title>📊 Información General</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h2>👤 Usuario Autenticado</h2>
+            <p *ngIf="debugData.currentUser; else noUser">
+              Email: {{ debugData.currentUser.email }}<br>
+              Nombre: {{ debugData.currentUser.fullName }}
+            </p>
+            <ng-template #noUser>
+              <p>No hay usuario autenticado</p>
+            </ng-template>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>
+            <h2>🐕 Perfil de Mascota</h2>
+            <p *ngIf="debugData.petProfile; else noPet">
+              Nombre: {{ debugData.petProfile.name }}<br>
+              Especie: {{ debugData.petProfile.species }}<br>
+              Raza: {{ debugData.petProfile.breed }}
+            </p>
+            <ng-template #noPet>
+              <p>No hay perfil de mascota configurado</p>
+            </ng-template>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>
+            <h2>🌐 Estado de Red</h2>
+            <p [style.color]="debugData.networkStatus ? 'green' : 'red'">
+              {{ debugData.networkStatus ? '✅ Conectado' : '❌ Desconectado' }}
+            </p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>
+            <h2>💾 Datos en LocalStorage</h2>
+            <p>{{ debugData.localStorageKeys.length }} claves encontradas</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="debugData && debugData.localStorageKeys.length > 0" @fadeIn>
+    <ion-card-header>
+      <ion-card-title>🗂️ Datos Almacenados</ion-card-title>
+      <ion-card-subtitle>Contenido de localStorage</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let key of debugData.localStorageKeys; trackBy: trackByKey">
+          <ion-label>
+            <h3>{{ key }}</h3>
+            <pre style="font-size: 10px; white-space: pre-wrap; max-height: 100px; overflow-y: auto;">{{ getLocalStorageValue(key) }}</pre>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!debugData" @fadeIn>
+    <ion-card-header>
+      <ion-card-title>Sin datos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Haz clic en "Recargar datos" para ver la información de debug.</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

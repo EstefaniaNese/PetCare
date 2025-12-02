@@ -108,3 +108,83 @@ textarea {
   }
 }
 
+.photo-section {
+  margin: 1.5rem 0;
+  text-align: center;
+  
+  h3 {
+    margin-bottom: 1rem;
+    color: var(--ion-color-primary);
+    font-weight: 600;
+  }
+  
+  .photo-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+    
+    .pet-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--ion-color-primary);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .remove-photo-btn {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--ion-color-danger);
+      color: white;
+      
+      ion-icon {
+        font-size: 16px;
+      }
+    }
+  }
+  
+  .photo-placeholder {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed var(--ion-color-medium);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    background: var(--ion-color-light);
+    
+    ion-icon {
+      margin-bottom: 0.5rem;
+    }
+    
+    p {
+      margin: 0;
+      color: var(--ion-color-medium);
+      font-size: 0.9rem;
+    }
+  }
+  
+  .photo-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    ion-button {
+      margin: 0;
+      min-width: 120px;
+    }
+  }
+  
+  ion-spinner {
+    margin-top: 1rem;
+  }
+}
+

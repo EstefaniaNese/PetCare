@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Servicios Cercanos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Filtros por tipo de servicio -->
+  <ion-segment [(ngModel)]="selectedFilter" (ionChange)="onFilterChange($event)" color="primary">
+    <ion-segment-button value="all">
+      <ion-label>Todos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="veterinaria">
+      <ion-label>Veterinarias</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="medico">
+      <ion-label>Médicos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="peluqueria">
+      <ion-label>Peluquerías</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Lista de servicios -->
+  <ion-list *ngIf="filteredServices.length > 0">
+    <ion-card *ngFor="let service of filteredServices; trackBy: trackByService" [@fadeIn] class="service-card">
+      <ion-card-header>
+        <div class="service-header">
+          <div class="service-icon" [class]="'type-' + service.type">
+            <ion-icon [name]="getServiceIcon(service.type)"></ion-icon>
+          </div>
+          <div class="service-info">
+            <ion-card-title>{{ service.name }}</ion-card-title>
+            <ion-card-subtitle>
+              <ion-chip [color]="service.isOpen ? 'success' : 'danger'" size="small">
+                {{ service.isOpen ? 'Abierto' : 'Cerrado' }}
+              </ion-chip>
+              <ion-chip color="medium" size="small">
+                {{ getServiceTypeLabel(service.type) }}
+              </ion-chip>
+            </ion-card-subtitle>
+          </div>
+        </div>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="service-details">
+          <p class="service-address">
+            <ion-icon name="location"></ion-icon>
+            {{ service.address }}
+          </p>
+          
+          <div class="service-meta">
+            <ion-chip color="warning" size="small">
+              <ion-icon name="star"></ion-icon>
+              {{ service.rating }}
+            </ion-chip>
+            <ion-chip color="medium" size="small">
+              <ion-icon name="navigate"></ion-icon>
+              {{ formatDistance(service.distance) }}
+            </ion-chip>
+          </div>
+
+          <div class="service-services">
+            <p class="services-label">Servicios:</p>
+            <div class="services-tags">
+              <ion-chip *ngFor="let serv of service.services" color="tertiary" size="small">
+                {{ serv }}
+              </ion-chip>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-actions">
+          <ion-button fill="outline" size="small" (click)="callService(service.phone)">
+            <ion-icon slot="start" name="call"></ion-icon>
+            Llamar
+          </ion-button>
+          <ion-button fill="outline" size="small" (click)="openInMaps(service.address)">
+            <ion-icon slot="start" name="navigate"></ion-icon>
+            Ver en mapa
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay servicios -->
+  <div *ngIf="filteredServices.length === 0" class="empty-state">
+    <ion-icon name="location-outline" size="large" color="medium"></ion-icon>
+    <h2>No hay servicios disponibles</h2>
+    <p>Intenta cambiar el filtro o busca en otra área</p>
+  </div>
+</ion-content>
+

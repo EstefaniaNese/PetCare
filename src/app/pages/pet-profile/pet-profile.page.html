@@ -60,10 +60,48 @@
           <mat-error *ngIf="petForm.controls.vetPhone.invalid">Ingresa un teléfono válido.</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>URL de foto (opcional)</mat-label>
-          <input matInput formControlName="avatarUrl" placeholder="https://..." />
-        </mat-form-field>
+        <!-- Sección de foto -->
+        <div class="photo-section">
+          <h3>Foto de la mascota</h3>
+          
+          <div class="photo-container" *ngIf="petPhoto">
+            <img [src]="petPhoto" alt="Foto de la mascota" class="pet-photo" />
+            <ion-button 
+              fill="clear" 
+              color="danger" 
+              class="remove-photo-btn"
+              (click)="removePhoto()">
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+          
+          <div class="photo-placeholder" *ngIf="!petPhoto">
+            <ion-icon name="camera" size="large" color="medium"></ion-icon>
+            <p>Sin foto</p>
+          </div>
+          
+          <div class="photo-buttons">
+            <ion-button 
+              fill="outline" 
+              color="primary" 
+              (click)="takePhoto()"
+              [disabled]="isLoadingPhoto">
+              <ion-icon name="camera" slot="start"></ion-icon>
+              Tomar Foto
+            </ion-button>
+            
+            <ion-button 
+              fill="outline" 
+              color="secondary" 
+              (click)="selectFromGallery()"
+              [disabled]="isLoadingPhoto">
+              <ion-icon name="images" slot="start"></ion-icon>
+              Galería
+            </ion-button>
+          </div>
+          
+          <ion-spinner *ngIf="isLoadingPhoto" name="crescent"></ion-spinner>
+        </div>
 
         <mat-form-field appearance="outline">
           <mat-label>Notas adicionales</mat-label>

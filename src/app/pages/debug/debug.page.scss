@@ -1,0 +1,59 @@
+ion-content {
+  --background: #f5f5f5;
+}
+
+ion-card {
+  margin-bottom: 1rem;
+  --background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.data-content {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  
+  pre {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin: 0 0 1rem 0;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}
+
+.log-info {
+  color: var(--ion-color-primary);
+}
+
+.log-warning {
+  color: var(--ion-color-warning);
+}
+
+.log-error {
+  color: var(--ion-color-danger);
+}
+
+ion-accordion {
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+ion-chip {
+  font-size: 0.75rem;
+}
+
+ion-grid {
+  padding: 0;
+}
+
+ion-button {
+  margin: 0.25rem 0;
+}

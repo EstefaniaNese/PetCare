@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Página No Encontrada</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="not-found-container">
+    <ion-icon name="paw" size="large" color="primary"></ion-icon>
+    <h1>¡Oops!</h1>
+    <h2>Página no encontrada</h2>
+    <p>La página que buscas no existe o ha sido movida.</p>
+    
+    <ion-button 
+      expand="block" 
+      color="primary" 
+      (click)="goHome()"
+      class="return-button">
+      <ion-icon name="home" slot="start"></ion-icon>
+      Volver al Inicio
+    </ion-button>
+  </div>
+</ion-content>

@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { StorageService } from './storage.service';
 
 export interface User {
   id: string;
@@ -31,16 +33,46 @@ export interface AuthResult {
 export class AuthService {
   private readonly currentUserSubject = new BehaviorSubject<User | null>(null);
   readonly currentUser$ = this.currentUserSubject.asObservable();
+  readonly isAuthenticated$ = this.currentUser$.pipe(
+    map(user => !!user)
+  );
 
-  constructor() {
-    // Cargar usuario desde localStorage si existe
-    const savedUser = localStorage.getItem('petcare_user');
-    if (savedUser) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
+  constructor(private storageService: StorageService) {
+    this.initializeAuth();
+  }
+
+  private async initializeAuth() {
+    // Esperar a que el storage esté listo
+    this.storageService.ready$.subscribe(async (isReady) => {
+      if (isReady) {
+        await this.loadSavedUser();
+      }
+    });
+  }
+
+  private async loadSavedUser() {
+    try {
+      // Intentar cargar desde Storage primero
+      const savedUser = await this.storageService.get('petcare_user');
+      if (savedUser) {
+        this.currentUserSubject.next(savedUser);
+        return;
+      }
+
+      // Fallback a localStorage
+      const localUser = localStorage.getItem('petcare_user');
+      if (localUser) {
+        const user = JSON.parse(localUser);
+        this.currentUserSubject.next(user);
+        // Migrar a Storage
+        await this.storageService.set('petcare_user', user);
+      }
+    } catch (error) {
+      console.error('Error cargando usuario guardado:', error);
     }
   }
 
-  login(credentials: LoginCredentials): AuthResult {
+  async login(credentials: LoginCredentials): Promise<AuthResult> {
     // Simulación de login - en producción esto sería una llamada a API
     
     // 1. Verificar usuario de prueba hardcodeado
@@ -53,7 +85,7 @@ export class AuthService {
       };
       
       this.currentUserSubject.next(user);
-      localStorage.setItem('petcare_user', JSON.stringify(user));
+      await this.saveUserSession(user);
       
       return {
         success: true,
@@ -71,7 +103,7 @@ export class AuthService {
       
       if (storedPassword === credentials.password) {
         this.currentUserSubject.next(foundUser);
-        localStorage.setItem('petcare_user', JSON.stringify(foundUser));
+        await this.saveUserSession(foundUser);
         
         return {
           success: true,
@@ -86,7 +118,7 @@ export class AuthService {
     };
   }
 
-  register(data: RegisterData): AuthResult {
+  async register(data: RegisterData): Promise<AuthResult> {
     // Verificar si el email ya está registrado
     const registeredUsers = this.getRegisteredUsers();
     const existingUser = registeredUsers.find(user => user.email === data.email);
@@ -115,7 +147,7 @@ export class AuthService {
 
     // Loguear automáticamente al usuario
     this.currentUserSubject.next(user);
-    localStorage.setItem('petcare_user', JSON.stringify(user));
+    await this.saveUserSession(user);
 
     return {
       success: true,
@@ -123,9 +155,32 @@ export class AuthService {
     };
   }
 
-  logout(): void {
+  async logout(): Promise<void> {
     this.currentUserSubject.next(null);
+    await this.storageService.clearSession();
     localStorage.removeItem('petcare_user');
+  }
+
+  private async saveUserSession(user: User): Promise<void> {
+    try {
+      // Guardar en Storage
+      await this.storageService.set('petcare_user', user);
+      
+      // Guardar sesión con token simulado
+      await this.storageService.saveSession({
+        token: `token_${user.id}_${Date.now()}`,
+        userId: user.id,
+        lastLogin: new Date().toISOString(),
+        rememberMe: true
+      });
+
+      // Fallback a localStorage
+      localStorage.setItem('petcare_user', JSON.stringify(user));
+    } catch (error) {
+      console.error('Error guardando sesión:', error);
+      // Fallback a localStorage
+      localStorage.setItem('petcare_user', JSON.stringify(user));
+    }
   }
 
   getCurrentUser(): User | null {

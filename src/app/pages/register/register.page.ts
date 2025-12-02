@@ -125,7 +125,7 @@ export class RegisterPage {
     }
 
     const { confirmPassword, ...payload } = this.registerForm.getRawValue();
-    const result = this.authService.register(payload);
+    const result = await this.authService.register(payload);
 
     if (!result.success) {
       await this.presentAlert('Ups...', result.message);
