@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { 
+  LoadingController, 
+  ToastController, 
+  AlertController, 
+  AnimationController,
+  Animation
+} from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 
 export interface LoadingState {
@@ -27,7 +33,8 @@ export class UiService {
   constructor(
     private loadingController: LoadingController,
     private toastController: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private animationCtrl: AnimationController
   ) {}
 
   // Métodos de Loading
@@ -49,6 +56,111 @@ export class UiService {
       await this.currentLoading.present();
     } catch (error) {
       console.error('Error mostrando loading:', error);
+    }
+  }
+
+  // Método para mostrar loading con animación de Ionic (usando estilos predefinidos de Ionic)
+  async showLoadingWithAnimation(
+    message: string = 'Cargando...',
+    animationType: 'login' | 'logout' = 'login'
+  ): Promise<void> {
+    try {
+      // Si ya hay un loading activo, no crear otro
+      if (this.currentLoading) {
+        return;
+      }
+
+      this.loadingStateSubject.next({ isLoading: true, message });
+
+      this.currentLoading = await this.loadingController.create({
+        message,
+        spinner: 'crescent',
+        cssClass: `custom-loading loading-${animationType}`,
+        backdropDismiss: false
+      });
+
+      await this.currentLoading.present();
+
+      // Aplicar animación de Ionic usando AnimationController con estilos predefinidos
+      setTimeout(async () => {
+        try {
+          // Obtener el elemento del loading wrapper usando querySelector
+          const loadingElement = document.querySelector('ion-loading .loading-wrapper') as HTMLElement;
+          
+          if (loadingElement) {
+            // Crear animación usando los mismos parámetros que las animaciones predefinidas de Ionic
+            let animation: Animation;
+            
+            if (animationType === 'login') {
+              // Animación estilo iOS: fade in con escala y desplazamiento desde abajo
+              animation = this.animationCtrl.create()
+                .addElement(loadingElement)
+                .duration(400)
+                .easing('cubic-bezier(0.36, 0.66, 0.04, 1)')
+                .fromTo('opacity', 0, 1)
+                .fromTo('transform', 'scale(0.8) translateY(20px)', 'scale(1) translateY(0)');
+            } else {
+              // Animación estilo Material Design: fade in con desplazamiento desde arriba
+              animation = this.animationCtrl.create()
+                .addElement(loadingElement)
+                .duration(400)
+                .easing('cubic-bezier(0.36, 0.66, 0.04, 1)')
+                .fromTo('opacity', 0, 1)
+                .fromTo('transform', 'translateY(-20px) scale(0.9)', 'translateY(0) scale(1)');
+            }
+            
+            await animation.play();
+          }
+        } catch (error) {
+          console.warn('No se pudo aplicar animación de Ionic:', error);
+        }
+      }, 10);
+    } catch (error) {
+      console.error('Error mostrando loading con animación:', error);
+    }
+  }
+
+  // Método para ocultar loading con animación de Ionic (usando estilos predefinidos de Ionic)
+  async hideLoadingWithAnimation(animationType: 'login' | 'logout' = 'login'): Promise<void> {
+    try {
+      if (this.currentLoading) {
+        // Obtener el elemento del loading wrapper usando querySelector
+        const loadingElement = document.querySelector('ion-loading .loading-wrapper') as HTMLElement;
+        
+        if (loadingElement) {
+          // Crear animación de salida usando los mismos parámetros que las animaciones predefinidas de Ionic
+          let leaveAnimation: Animation;
+          
+          if (animationType === 'login') {
+            // Animación estilo iOS: fade out con escala
+            leaveAnimation = this.animationCtrl.create()
+              .addElement(loadingElement)
+              .duration(300)
+              .easing('cubic-bezier(0.36, 0.66, 0.04, 1)')
+              .fromTo('opacity', 1, 0)
+              .fromTo('transform', 'scale(1)', 'scale(0.9)');
+          } else {
+            // Animación estilo Material Design: fade out con desplazamiento hacia arriba
+            leaveAnimation = this.animationCtrl.create()
+              .addElement(loadingElement)
+              .duration(300)
+              .easing('cubic-bezier(0.36, 0.66, 0.04, 1)')
+              .fromTo('opacity', 1, 0)
+              .fromTo('transform', 'translateY(0) scale(1)', 'translateY(-10px) scale(0.95)');
+          }
+          
+          // Ejecutar animación de salida antes de cerrar
+          await leaveAnimation.play();
+        }
+
+        this.loadingStateSubject.next({ isLoading: false });
+        await this.currentLoading.dismiss();
+        this.currentLoading = null;
+      }
+    } catch (error) {
+      console.error('Error ocultando loading con animación:', error);
+      // Fallback: cerrar sin animación
+      await this.hideLoading();
     }
   }
 

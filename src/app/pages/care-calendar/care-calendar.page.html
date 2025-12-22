@@ -8,7 +8,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-list lines="full">
+  <!-- Estado vacío -->
+  <div class="empty-state" *ngIf="(reminders$ | async)?.length === 0">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <h2>Sin recordatorios</h2>
+    <p>Haz click en <strong>+</strong> para añadir tu primer cuidado</p>
+  </div>
+
+  <!-- Lista de recordatorios -->
+  <ion-list lines="full" *ngIf="(reminders$ | async)?.length! > 0">
     <ion-item
       *ngFor="let reminder of reminders$ | async; trackBy: trackByReminder"
       (click)="toggleReminder(reminder)"
@@ -33,7 +41,7 @@
   </ion-list>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button color="secondary" (click)="openModal()">
+    <ion-fab-button color="primary" (click)="openModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

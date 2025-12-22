@@ -14,9 +14,8 @@
       <ion-card-subtitle>Información vital de tu mascota y contacto directo</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <ion-button expand="block" color="danger" size="large" (click)="showSOS()">
-        <ion-icon slot="start" name="alert"></ion-icon>
-        SOS Veterinario
+      <ion-button class="btn-rounded" color="danger" size="large" (click)="showSOS()">
+        Emergencia
       </ion-button>
       <ion-text color="medium">
         Se mostrará la información registrada en el perfil y podrás llamar al veterinario.
@@ -32,13 +31,12 @@
     <ion-card-content>
       <div class="location-section">
         <ion-button 
-          expand="block" 
-          fill="outline" 
+          class="btn-rounded"
           color="primary" 
           (click)="findNearbyVeterinaries()"
           [disabled]="isLoadingLocation">
           <ion-icon slot="start" name="location"></ion-icon>
-          <span *ngIf="!isLoadingLocation">Buscar Veterinarias Cercanas</span>
+          <span *ngIf="!isLoadingLocation">Buscar Veterinarias</span>
           <span *ngIf="isLoadingLocation">Buscando...</span>
         </ion-button>
         
@@ -133,15 +131,15 @@
       <ion-grid>
         <ion-row>
           <ion-col size="12">
-            <ion-button expand="block" color="secondary" (click)="callEmergency('106')">
+            <ion-button class="btn-rounded" color="secondary" (click)="callEmergency('106')">
               <ion-icon slot="start" name="medkit"></ion-icon>
-              Ambulancia veterinaria (106)
+              Ambulancia veterinaria 
             </ion-button>
           </ion-col>
           <ion-col size="12">
-            <ion-button expand="block" color="tertiary" (click)="callEmergency('116')">
+            <ion-button class="btn-rounded" color="secondary" (click)="callEmergency('116')">
               <ion-icon slot="start" name="call"></ion-icon>
-              Bomberos (116)
+              Bomberos 
             </ion-button>
           </ion-col>
         </ion-row>

@@ -1,11 +1,3 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button />
-    </ion-buttons>
-    <ion-title>PetCare+</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <!-- Indicador de conectividad -->
@@ -24,10 +16,10 @@
         
         <!-- Botones de acción -->
         <div class="header-actions">
-          <ion-button fill="clear" color="medium" (click)="goTo('/debug')">
+          <!-- <ion-button fill="clear" color="medium" (click)="goTo('/debug')">
             <ion-icon name="bug-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-          <ion-button fill="clear" color="medium" (click)="logout()">
+          </ion-button> -->
+          <ion-button fill="clear" color="primary" (click)="logout()">
             <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
           </ion-button>
         </div>
@@ -37,13 +29,13 @@
 
   <ion-card class="pet-card" *ngIf="pet$ | async as pet; else emptyPet" @fadeIn>
     <ion-card-header>
-      <ion-card-title>{{ pet.name }}</ion-card-title>
       <ion-card-subtitle>{{ pet.species }} • {{ pet.breed }}</ion-card-subtitle>
+      <ion-card-title>{{ pet.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div class="pet-details">
         <ion-avatar>
-          <img [src]="pet.avatarUrl || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Mascota" />
+          <img [src]="pet.avatarUrl || 'assets/iconPetCare.png'" alt="Mascota" />
         </ion-avatar>
         <ul>
           <li>Peso: {{ pet.weight }} kg</li>
@@ -51,14 +43,17 @@
           <li>Veterinario: {{ pet.vetName }} ({{ pet.vetPhone }})</li>
         </ul>
       </div>
-      <ion-button fill="clear" color="tertiary" (click)="goTo('/pet-profile')">
+      <ion-button class="btn-rounded" color="primary" (click)="goTo('/pet-profile')">
         Actualizar información
       </ion-button>
     </ion-card-content>
   </ion-card>
 
   <ng-template #emptyPet>
-    <ion-card class="pet-card" @fadeIn>
+    <ion-card class="pet-card pet-card-empty" @fadeIn>
+      <div class="pet-card-image-bg">
+        <img src="assets/huella.png" alt="Huella de mascota" />
+      </div>
       <ion-card-header>
         <ion-card-title>Perfil pendiente</ion-card-title>
       </ion-card-header>
@@ -66,8 +61,8 @@
         <p>
           Registra los datos principales de tu mascota para personalizar recordatorios y emergencias.
         </p>
-        <ion-button expand="block" color="secondary" (click)="goTo('/pet-profile')">
-          Registrar mascota
+        <ion-button class="btn-rounded" color="primary" (click)="goTo('/pet-profile')">
+          Registrar
         </ion-button>
       </ion-card-content>
     </ion-card>
@@ -78,37 +73,30 @@
       <ion-card-title>Accesos rápidos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <ion-button expand="block" color="primary" (click)="goTo('/care-calendar')">
-              <ion-icon slot="start" name="calendar"></ion-icon>
-              Calendario
-            </ion-button>
-          </ion-col>
-          <ion-col size="6">
-            <ion-button expand="block" color="danger" (click)="goTo('/emergencies')">
-              <ion-icon slot="start" name="medkit"></ion-icon>
-              Emergencias
-            </ion-button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <ion-button expand="block" color="success" (click)="goTo('/community')">
-              <ion-icon slot="start" name="people"></ion-icon>
-              Comunidad
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <div class="quick-actions-row">
+        <button class="quick-action-btn" (click)="goTo('/care-calendar')">
+          <ion-icon name="calendar"></ion-icon>
+          <span>Calendario</span>
+        </button>
+        <button class="quick-action-btn" (click)="goTo('/emergencies')">
+          <ion-icon name="medkit"></ion-icon>
+          <span>Emergencias</span>
+        </button>
+        <button class="quick-action-btn" (click)="goTo('/community')">
+          <ion-icon name="people"></ion-icon>
+          <span>Comunidad</span>
+        </button>
+      </div>
     </ion-card-content>
   </ion-card>
 
   <ion-card class="reminders-card" @fadeIn>
+    <div class="reminders-image-bg">
+      <img src="assets/salud.png" alt="Salud" />
+    </div>
     <ion-card-header>
-      <ion-card-title>Próximos cuidados</ion-card-title>
       <ion-card-subtitle>Registra y marca los cuidados completados</ion-card-subtitle>
+      <ion-card-title>Próximos cuidados</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
@@ -129,7 +117,7 @@
           </ion-label>
         </ion-item>
       </ion-list>
-      <ion-button expand="block" color="primary" fill="outline" (click)="goTo('/care-calendar')">
+      <ion-button class="btn-rounded" color="primary" (click)="goTo('/care-calendar')">
         Gestionar recordatorios
       </ion-button>
     </ion-card-content>
@@ -139,7 +127,11 @@
   <ion-card class="sync-status-card" @fadeIn *ngIf="lastSync">
     <ion-card-content>
       <div class="sync-info">
-        <ion-icon name="sync" [color]="isOnline ? 'success' : 'medium'"></ion-icon>
+        <ion-icon 
+          [name]="isOnline ? 'cloud-done-outline' : 'cloud-offline-outline'" 
+          [class.online]="isOnline"
+          [class.offline]="!isOnline"
+          class="sync-icon"></ion-icon>
         <div>
           <p class="sync-text">
             <strong>Última sincronización:</strong> {{ formatLastSync(lastSync) }}

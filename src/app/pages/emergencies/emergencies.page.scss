@@ -10,8 +10,24 @@ ion-card {
   border-radius: 12px;
 }
 
-.sos-card ion-button {
-  margin-bottom: 12px;
+.sos-card ion-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  ion-button {
+    margin-bottom: 12px;
+  }
+}
+
+// Centrar botones en contenedores
+ion-card-content {
+  ion-grid {
+    ion-col {
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
 
 ion-list {
@@ -26,10 +42,15 @@ ion-item {
 
 // Botones con nuevo color
 ion-button[color="primary"] {
-  --background: #c97a38;
-  --background-activated: #b06831;
-  --background-hover: #ce874c;
+  --background: #F59245;
+  --background-activated: #d97d35;
+  --background-hover: #f9a55e;
   --color: #ffffff;
+}
+
+// Botón redondeado estilo "Registrar"
+.btn-rounded {
+  --border-radius: 20px;
 }
 
 ion-button[color="danger"] {

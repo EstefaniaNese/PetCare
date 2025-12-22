@@ -18,6 +18,7 @@ import { NavController } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { UiService } from './services/ui.service';
 
 @Component({
   selector: 'app-root',
@@ -73,6 +74,7 @@ export class AppComponent {
     private readonly navCtrl: NavController,
     private readonly authService: AuthService,
     private readonly router: Router,
+    private readonly uiService: UiService,
   ) {
     // Evaluar ruta inicial
     this.isAuthRoute = this.isAuthUrl(this.router.url);
@@ -97,8 +99,20 @@ export class AppComponent {
     this.navCtrl.navigateForward(url, { animated: true, animationDirection: 'forward' });
   }
 
-  logout(): void {
-    this.authService.logout();
+  async logout(): Promise<void> {
+    // Mostrar loading con animación de Ionic al cerrar sesión
+    await this.uiService.showLoadingWithAnimation('Cerrando sesión...', 'logout');
+    
+    // Simular tiempo de procesamiento para mostrar la animación
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Cerrar sesión
+    await this.authService.logout();
+    
+    // Ocultar loading con animación de Ionic
+    await this.uiService.hideLoadingWithAnimation('logout');
+    
+    // Navegar al login
     this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'forward' });
   }
 }

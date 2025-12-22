@@ -5,20 +5,20 @@
 
 // Define custom theme colors with new orange
 $petcare-orange-palette: (
-  50: #fdf6ed,
-  100: #f8e6d1,
-  200: #f1cca4,
-  300: #e9b276,
-  400: #e2984b,
-  500: #c97a38,
-  600: #b46a2f,
-  700: #9d5b28,
-  800: #864c22,
-  900: #6c3a18,
-  A100: #ffd9b8,
-  A200: #c97a38,
-  A400: #b06831,
-  A700: #8c5127,
+  50: #fef5ed,
+  100: #fce5d1,
+  200: #f9d3b3,
+  300: #f6c195,
+  400: #f4b37e,
+  500: #F59245,
+  600: #f48a3e,
+  700: #f27f36,
+  800: #f0752e,
+  900: #ee6321,
+  A100: #ffffff,
+  A200: #F59245,
+  A400: #f27f36,
+  A700: #ee6321,
   contrast: (
     50: rgba(black, 0.87),
     100: rgba(black, 0.87),
@@ -98,15 +98,15 @@ $petcare-theme: mat.m2-define-light-theme((
 
 /* Variables CSS globales para el nuevo tema */
 :root {
-  --ion-color-primary: #c97a38;
-  --ion-color-primary-rgb: 201, 122, 56;
+  --ion-color-primary: #F59245;
+  --ion-color-primary-rgb: 245, 146, 69;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #b06831;
-  --ion-color-primary-tint: #ce874c;
+  --ion-color-primary-shade: #d8823d;
+  --ion-color-primary-tint: #f69d58;
 
-  --ion-background-color: #f9f5ea;
-  --ion-background-color-rgb: 249, 245, 234;
+  --ion-background-color: #F5F5F7;
+  --ion-background-color-rgb: 245, 245, 247;
   --ion-text-color: #000000;
   --ion-text-color-rgb: 0, 0, 0;
 }
@@ -115,28 +115,74 @@ ion-app,
 .ion-page,
 ion-content,
 body {
-  --background: #f9f5ea !important;
-  background: #f9f5ea !important;
+  --background: #F5F5F7 !important;
+  background: #F5F5F7 !important;
 }
 
 /* Estilos globales para formularios con nuevos colores */
+.mat-mdc-form-field {
+  &.mat-form-field-appearance-outline,
+  &.mat-mdc-form-field-appearance-outline {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #F59245 !important;
+    }
+    
+    .mat-mdc-form-field-outline {
+      color: #F59245 !important;
+    }
+
+    &.mat-focused .mdc-notched-outline__leading,
+    &.mat-focused .mdc-notched-outline__notch,
+    &.mat-focused .mdc-notched-outline__trailing {
+      border-color: #F59245 !important;
+      border-width: 2px !important;
+    }
+
+    &.mat-focused .mat-mdc-form-field-outline-thick {
+      color: #F59245 !important;
+    }
+
+    .mat-mdc-floating-label {
+      color: #666666 !important;
+    }
+
+    &.mat-focused .mat-mdc-floating-label {
+      color: #F59245 !important;
+    }
+  }
+
+  .mat-mdc-input-element {
+    color: #12384b !important;
+  }
+
+  .mat-mdc-select-value {
+    color: #12384b !important;
+  }
+
+  .mat-mdc-select-arrow {
+    color: #F59245 !important;
+  }
+}
+
 .form-container {
   .mat-mdc-form-field {
     &.mat-form-field-appearance-outline {
       .mat-mdc-form-field-outline {
-        color: #c97a38 !important;
+        color: #F59245 !important;
       }
 
       &.mat-focused .mat-mdc-form-field-outline-thick {
-        color: #c97a38 !important;
+        color: #F59245 !important;
       }
 
       .mat-mdc-floating-label {
-        color: #c97a38 !important;
+        color: #666666 !important;
       }
 
       &.mat-focused .mat-mdc-floating-label {
-        color: #c97a38 !important;
+        color: #F59245 !important;
       }
     }
 
@@ -149,7 +195,7 @@ body {
     }
 
     .mat-mdc-select-arrow {
-      color: #c97a38 !important;
+      color: #F59245 !important;
     }
   }
 }
@@ -157,10 +203,9 @@ body {
 /* Fondo claro para páginas de formularios */
 app-pet-profile ion-content,
 app-register ion-content,
-app-login ion-content,
 app-care-calendar ion-content,
 app-home ion-content {
-  --background: #f9f5ea !important;
+  --background: #F5F5F7 !important;
 }
 
 /* Cards con fondo blanco */
@@ -190,12 +235,12 @@ app-care-calendar ion-card-subtitle {
 
 /* Navbar/Toolbar con nuevo color */
 ion-toolbar {
-  --background: #c97a38 !important;
+  --background: #F59245 !important;
   --color: #ffffff !important;
 }
 
 ion-header ion-toolbar {
-  --background: #c97a38 !important;
+  --background: #F59245 !important;
   --color: #ffffff !important;
 }
 
@@ -213,9 +258,13 @@ ion-menu-button {
   --color: #ffffff !important;
 }
 
-/* Back button */
+/* Back button - solo icono, sin texto */
 ion-back-button {
   --color: #ffffff !important;
+  
+  &::part(text) {
+    display: none;
+  }
 }
 
 /* Iconos globales - asegurar visibilidad */
@@ -245,4 +294,75 @@ ion-button[color="success"] ion-icon,
 ion-button[color="warning"] ion-icon,
 ion-button[color="secondary"] ion-icon {
   color: #ffffff !important;
+}
+
+/* Estilos para animaciones de Ionic - Loading personalizado */
+.custom-loading {
+  --background: rgba(0, 0, 0, 0.8);
+  --spinner-color: #F59245;
+  --color: #ffffff;
+  
+  .loading-wrapper {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+  }
+  
+  .loading-spinner {
+    color: #F59245;
+  }
+  
+  .loading-message {
+    color: #12384b;
+    font-weight: 500;
+    margin-top: 16px;
+  }
+}
+
+/* Animación específica para login */
+.loading-login {
+  .loading-wrapper {
+    animation: loginPulse 1.5s ease-in-out infinite;
+  }
+}
+
+/* Animación específica para logout */
+.loading-logout {
+  .loading-wrapper {
+    animation: logoutFade 0.8s ease-in-out;
+  }
+}
+
+/* Keyframes para animaciones de Ionic */
+@keyframes loginPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.95;
+  }
+}
+
+@keyframes logoutFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejoras visuales para el backdrop del loading */
+ion-loading {
+  --backdrop-opacity: 0.6;
+  
+  &::part(backdrop) {
+    backdrop-filter: blur(4px);
+  }
 }

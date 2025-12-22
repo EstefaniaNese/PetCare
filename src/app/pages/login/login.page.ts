@@ -81,21 +81,37 @@ export class LoginPage {
       return;
     }
 
-    const result = await this.uiService.handleOperation(
-      () => this.authService.login(this.loginForm.getRawValue()),
-      {
-        loadingMessage: 'Iniciando sesión...',
-        successMessage: '¡Bienvenido! Disfruta de PetCare+',
-        errorMessage: 'Error al iniciar sesión',
-        showSuccessToast: true,
-        showErrorAlert: false
-      }
-    );
+    // Mostrar loading inicial
+    await this.uiService.showLoading('Iniciando sesión...');
 
-    if (result?.success) {
-      this.navCtrl.navigateForward('/home', { animated: true, animationDirection: 'forward' });
-    } else if (result && !result.success) {
-      await this.uiService.showErrorToast(result.message);
+    try {
+      const result = await this.authService.login(this.loginForm.getRawValue());
+
+      if (result.success) {
+        // Ocultar loading inicial
+        await this.uiService.hideLoading();
+        
+        // Mostrar loading con animación de Ionic después del login exitoso
+        await this.uiService.showLoadingWithAnimation('Cargando tu perfil...', 'login');
+        
+        // Simular tiempo de carga para mostrar la animación
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Ocultar loading con animación de Ionic
+        await this.uiService.hideLoadingWithAnimation('login');
+        
+        // Mostrar mensaje de éxito
+        await this.uiService.showSuccessToast('¡Bienvenido! Disfruta de PetCare+');
+        
+        // Navegar a home
+        this.navCtrl.navigateForward('/home', { animated: true, animationDirection: 'forward' });
+      } else {
+        await this.uiService.hideLoading();
+        await this.uiService.showErrorToast(result.message);
+      }
+    } catch (error) {
+      await this.uiService.hideLoading();
+      await this.uiService.showErrorToast('Error al iniciar sesión');
     }
   }
 
